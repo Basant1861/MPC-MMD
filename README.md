@@ -1,2 +1,2 @@
 # MPC-MMD
-Repository associated with our ICRA 2025 paper. The repository will be updated soon.
+Repository associated with our RAL paper. The repository will be updated soon.
