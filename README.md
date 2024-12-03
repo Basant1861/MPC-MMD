@@ -18,3 +18,4 @@ conda create -n mpc_mmd python=3.8
 conda activate mpc_mmd
 pip install -r requirements.txt
 ```
+3. For CARLA(version 13), follow the instructions given in the official documentation https://carla.readthedocs.io/en/0.9.13/
