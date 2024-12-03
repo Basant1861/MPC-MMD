@@ -1,5 +1,5 @@
 # MPC-MMD
-Repository associated with our RAL paper.
+Repository associated with our RAL submission.
 
 
 https://github.com/user-attachments/assets/50226986-e1ef-4133-9a12-ed1860260f7d
