@@ -1,14 +1,9 @@
-from functools import partial
-from kernel_computation import kernel_matrix
-from compute_beta import beta_cem
+
 import numpy as np
-import jax.numpy as jnp
-from jax import lax,jit,vmap
 import matplotlib.pyplot as plt
-import jax
 import scipy
 import sys
-sys.path.insert(1, '/home/ims-robotics/Basant/ICRA_RAL_2025/synthetic_stochastic_dynamics_dynamic_obs/optimizer')
+sys.path.insert(1, 'path/to/optimizer')
 from optimizer import cem
 import argparse
 
@@ -216,8 +211,7 @@ list_num_obs = args.num_obs
 acc_const_noise = args.acc_const_noise
 steer_const_noise = args.steer_const_noise
 
-sc = "cut_in"
-root = "./data/{}".format(sc)
+root = "./data"
 
 for noise in list_noises:
     for noise_level in list_noise_levels:
@@ -452,9 +446,7 @@ for noise in list_noises:
                             plt.axis('equal')
                             plt.show()
 
-                    # if num_prime==60 and noise=="beta" and noise_level==0.3 and num_reduced==5:
-                    #     print(coll_mmd,coll_cvar,coll_mmd_random)
-                    np.savez("./stats/{}/{}_noise/noise_{}/ts_{}/{}_samples_{}_obs".format(sc,noise,int(noise_level*100),
+                    np.savez("./stats/{}_noise/noise_{}/ts_{}/{}_samples_{}_obs".format(noise,int(noise_level*100),
                                 num_prime,
                                 num_reduced,num_obs),
                                 coll_cvar = coll_cvar,coll_cvar_lane = coll_cvar_lane,

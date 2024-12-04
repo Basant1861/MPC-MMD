@@ -137,8 +137,8 @@ class obs_data():
     def compute_obs_data(self,num_obs,seed):
 
         x_obs_init = jax.random.choice(jax.random.PRNGKey(seed),jnp.linspace(15,45,30), (num_obs, ),replace=False)
-        # y_obs_init = jax.random.choice(jax.random.PRNGKey(seed),jnp.array([-1.75,1.75]),(num_obs,))
-        y_obs_init = 1.75*jnp.ones(num_obs)
+        # y_obs_init = jax.random.choice(jax.random.PRNGKey(seed),jnp.array([-1.75,1.75]),(num_obs,)) # overtake/lane_change scenario
+        y_obs_init = 1.75*jnp.ones(num_obs) # cut-in scenario
 
         vx_obs_init = jax.random.choice(jax.random.PRNGKey(seed),jnp.linspace(0.5,5,15), (num_obs, ),replace = False)
         vy_obs_init = jnp.zeros(num_obs)

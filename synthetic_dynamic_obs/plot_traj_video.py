@@ -181,9 +181,8 @@ acc_const_noise = args.acc_const_noise
 steer_const_noise = args.steer_const_noise
 
 num_exps = 1
-sc = "overtake"
 
-root = "./data/{}".format(sc)
+root = "./data"
 
 for noise in list_noises:
     for noise_level in list_noise_levels:
