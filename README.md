@@ -124,6 +124,12 @@ python3 plot_traj_video.py --num_obs <int> --num_reduced_sets <from Step 2>
 
 Once inside the carla folder follow the below steps:
 
+***Step 0*** Change the following line to include the path to the optimizer/Python_API folder in ```main_carla.py```:
+```
+sys.path.insert(1, 'path/to/optimizer')
+sys.path.insert(1, 'path/to/PythonAPI/carla')
+```
+
 ***Deterministic baseline*** : Run the following command:
 ```
 python3 main_carla.py --noise_levels <float> --num_reduced_set <not_relevant, put 1> --num_exps <int>
