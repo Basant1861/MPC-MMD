@@ -52,43 +52,20 @@ class CarlaSimulation():
 		
 		if town=="Town10HD":
 			self.lane_y = [0.,3.5]
+			self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y))
+			self.other_vehicles[:,0] = np.array([ 70,105,120,140,175,210,245,280 ])
+
 		else:
 			self.lane_y = [0.,-3.5]
-
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([ 35,70,105,140,175,185,195,210,220,230,245,255,265,280 ])
-
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([ 35,70,105,140,175,210,245,280 ])
-		
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([ -15,-10,5,15,35,55,70,105,120,140,175,210,245,280 ])
-
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([ 70,105,120,140,175,210,245,280 ])
-
-	##################### Town 5
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([ 15,25,35,45,55,65,75,85,95,105])
-
-		self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,
-										self.lane_y,self.lane_y,self.lane_y,
-										self.lane_y,self.lane_y))
-		self.other_vehicles[:,0] = np.array([ 15,25,35,45,55,65,75,85,95,105,130,140,160,180,190,200])
-		
-		# self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y))
-		# self.other_vehicles[:,0] = np.array([25,35,50,70,95,105,130,150,160,170,180,190])
+			self.other_vehicles[:,1] = np.hstack((self.lane_y,self.lane_y,self.lane_y,self.lane_y,self.lane_y))
+			self.other_vehicles[:,0] = np.array([50,70,95,105,130,150,160,170,180,190])
 		
 		self.client = carla.Client('localhost', 2000)
 		self.client.set_timeout(10.0)
 		
 		self.town = town
 		self.world = self.client.load_world(town)
-		# # Toggle all buildings off
-		# self.world.unload_map_layer(carla.MapLayer.Buildings)
-
-		# self.world.unload_map_layer(carla.MapLayer.ParkedVehicles)
-
+		
 		self.m =self.world.get_map()
 		self.tm = self.client.get_trafficmanager()
 		self.tm_port = self.tm.get_port()
@@ -256,9 +233,9 @@ class CarlaSimulation():
 		vel_list = [10.0, 15.0, 20.0]
 		for obs in self.obs_list:
 			# vel = random.choice(vel_list)
-			# obs.set_target_velocity(carla.Vector3D(0.0,0.0,0))
-			self.tm.auto_lane_change(obs,True)
-			obs.set_autopilot(True,self.tm_port)
+			obs.set_target_velocity(carla.Vector3D(0.0,0.0,0))
+			self.tm.auto_lane_change(obs,False)
+			obs.set_autopilot(False,self.tm_port)
 			
 	def draw_image(self, surface, image, blend=False):
 		array = np.frombuffer(image.raw_data, dtype=np.dtype("uint8"))

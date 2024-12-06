@@ -9,6 +9,7 @@ from kernel_computation import kernel_matrix
 import time
 from compute_beta import beta_cem
 from projection import Projection
+from projection_det import Projection_det
 from cem_helper import Helper
 from costs import Costs
 
@@ -185,6 +186,12 @@ class CEM():
         self.prob2 = beta_cem(self.num_reduced_sqrt,self.num_reduced,self.ker_wt,self.P_jax)
 
         self.projection = Projection(self.num_obs,self.num_circles,self.v_max,self.v_min,self.a_max,
+                 self.num,self.P_jax,self.Pdot_jax,self.Pddot_jax,self.rho_ineq,self.rho_obs,self.rho_projection,self.rho_lane,
+                 self.gamma,self.gamma_obs,self.num_batch,self.maxiter,self.nvar,
+                 self.A_eq_x,self.A_eq_y,self.A_obs,self.A_lane_bound,self.y_lb,self.y_ub,
+                 self.A_vel,self.A_acc,self.A_projection,self.a_centr,self.wheel_base)
+        
+        self.projection_det = Projection_det(self.num_obs,self.num_circles,self.v_max,self.v_min,self.a_max,
                  self.num,self.P_jax,self.Pdot_jax,self.Pddot_jax,self.rho_ineq,self.rho_obs,self.rho_projection,self.rho_lane,
                  self.gamma,self.gamma_obs,self.num_batch,self.maxiter,self.nvar,
                  self.A_eq_x,self.A_eq_y,self.A_obs,self.A_lane_bound,self.y_lb,self.y_ub,
@@ -657,7 +664,7 @@ class CEM():
         x_init,y_init,vx_init,vy_init = x_global_init,y_global_init,v_global_init*jnp.cos(psi_global_init),\
                                         v_global_init*jnp.sin(psi_global_init)
         ax_init,ay_init = 0.,0.
-        x_init,y_init,vx_init,vy_init,psi_init = self.cem_helper.compute_noisy_init_state(idx_mpc,x_init,y_init,vx_init,vy_init)
+        x_init,y_init,vx_init,vy_init,psi_init = self.cem_helper.compute_noisy_init_state_det(idx_mpc,x_init,y_init,vx_init,vy_init)
        
         temp = jnp.asarray([x_init,y_init, jnp.sqrt(vx_init**2+vy_init**2), init_state_global[3].reshape(-1),
                              psi_init.reshape(-1), init_state_global[5].reshape(-1)])
@@ -681,7 +688,7 @@ class CEM():
 
             c_x, c_y, x, y, xdot, ydot, xddot, yddot, res_norm_batch,\
             lamda_x, lamda_y,s_lane,steering,kappa_interp\
-            = self.projection.compute_projection(x_obs_traj,y_obs_traj,b_eq_x, b_eq_y,
+            = self.projection_det.compute_projection(x_obs_traj,y_obs_traj,b_eq_x, b_eq_y,
                                                                             lamda_x, lamda_y, c_x_bar, c_y_bar,self.a_obs,self.b_obs,s_lane,
                                                                             arc_vec, kappa)
 
@@ -705,10 +712,6 @@ class CEM():
 
             neural_output_projection = neural_output_batch[idx_ellite_projection[0:self.ellite_num_projection]]
 
-            acc_ellite_projection,_ \
-                = self.cem_helper.compute_controls(xdot_ellite_projection, ydot_ellite_projection,
-                                        xddot_ellite_projection,yddot_ellite_projection)
-            
             key,subkey = jax.random.split(key)
             
             x_roll_frenet_ellite_projection,y_roll_frenet_ellite_projection \

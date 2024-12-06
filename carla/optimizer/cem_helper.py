@@ -677,6 +677,25 @@ class Helper():
             ,psi_init*jnp.ones(self.num_reduced)
     
     @partial(jit, static_argnums=(0, ))	
+    def compute_noisy_init_state_det(self,idx_mpc,x_init,y_init,vx_init,vy_init):
+        key = jax.random.PRNGKey(idx_mpc)
+        key,subkey = jax.random.split(key)
+
+        epsilon = jax.random.multivariate_normal(key,jnp.zeros(4),jnp.eye(4), (1,) )
+        epsilon_x = epsilon[:,0]
+        epsilon_y = epsilon[:,1]
+        
+        eps_x = epsilon_x*self.sigma[0] + self.mu[0]
+        eps_y = epsilon_y*self.sigma[1] + self.mu[1]
+        
+        psi_init = jnp.arctan2(vy_init,vx_init)
+        x_init = x_init + eps_x
+        y_init = y_init + eps_y
+        
+        return x_init,y_init,vx_init*jnp.ones(1),vy_init*jnp.ones(1)\
+            ,psi_init*jnp.ones(1)
+    
+    @partial(jit, static_argnums=(0, ))	
     def compute_noisy_init_state_baseline(self,idx_mpc,x_init,y_init,vx_init,vy_init):
         key = jax.random.PRNGKey(idx_mpc)
         key,subkey = jax.random.split(key)

@@ -95,7 +95,6 @@ for noise in list_noises:
             # hide tick and tick label of the big axis
             plt.tick_params(labelcolor='none', which='both', top=False, bottom=False, left=False, right=False)
             plt.xlabel('(b) High beta noise', fontweight = "bold", fontsize = fs,loc="center")
-
             
         for i,num_reduced in enumerate(list_num_reduced):
             for j,noise_level in enumerate(list_noise_levels):

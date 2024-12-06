@@ -10,6 +10,18 @@ import carla
 import pygame
 import math
 
+# import numpy as np
+# import jax.numpy as jnp
+# import sys
+# sys.path.insert(1, '/home/ims-robotics/Basant_repos/MPC-MMD/carla/optimizer')
+# from optimizer import cem
+# import argparse
+# sys.path.insert(1, '/home/ims-robotics/CARLA_0.9.13/PythonAPI/carla')
+# import carla_simulation
+# import carla
+# import pygame
+# import math
+
 def apply_control(w,v,prob, csm,target_acc,prev_vel,prev_acc,throttle1,steer):
 
     physics_control = csm.vehicle.get_physics_control()
@@ -165,7 +177,6 @@ def main():
     total_obs = args.total_obs # total number of obs in simulation
     num_obs = args.num_obs # number of nearest obs to take into account in optimizer
     cost = args.costs
-    obs_type = args.obs_type
     acc_const_noise = args.acc_const_noise
     steer_const_noise = args.steer_const_noise
 
@@ -204,10 +215,7 @@ def main():
         font = carla_simulation.get_font()
         clock = pygame.time.Clock()
         
-        if obs_type=="static":
-            csm = carla_simulation.CarlaSimulation(display, font,clock,total_obs,town)
-        else:
-            csm = carla_simulation.CarlaSimulation(display, font,clock,total_obs,town)
+        csm = carla_simulation.CarlaSimulation(display, font,clock,total_obs,town)
 
         collision_sensor = csm.blueprint_library.find('sensor.other.collision')
         collision_sensor = csm.world.spawn_actor(
@@ -238,7 +246,7 @@ def main():
             y_path_data[i] = route_trace[i][0].transform.location.y
 
         # Artificially extending the path so that optimizer does not run into issues when near the end of the actual path
-        if town=="Town10HD" or town=="Town10HD_Opt":
+        if town=="Town10HD":
             num_p = 20000
             m = (y_path_data[-1]-y_path_data[-2])/(x_path_data[-1]-x_path_data[-2])
 
