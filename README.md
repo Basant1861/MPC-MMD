@@ -40,6 +40,10 @@ Here noise_level corresponds to the control noise you want to add, typically bet
 
 ## Synthetic Static Environment
 Once inside the *synthetic_static_obs* directory follow the below steps:
+***Step 0*** Change the following line to include the path to the optimizer module in ```main_mpc.py, validation.py, plot_traj_video.py```:
+```
+sys.path.insert(1, 'path/to/optimizer')
+```
 
 ***Step 1*** To configure the obstacle scenarios you need to edit the function ```compute_obs_data``` in ```main_mpc.py```.
 
@@ -77,6 +81,11 @@ python3 plot_traj_video.py --num_obs <int> --num_reduced_sets <from Step 2>
 
 ## Synthetic Dynamic Environment
 Once inside the *synthetic_dynamic_obs* directory follow the below steps:
+
+***Step 0*** Change the following line to include the path to the optimizer module in ```main_mpc.py, validation.py, plot_traj_video.py```:
+```
+sys.path.insert(1, 'path/to/optimizer')
+```
 
 ***Step 1*** Run the following command from the root directory:
 ```
