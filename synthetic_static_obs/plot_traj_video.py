@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import jax
 import scipy
 import sys
-sys.path.insert(1, '/home/ims-robotics/Basant/ICRA_RAL_2025/synthetic_stochastic_dynamics/optimizer')
+sys.path.insert(1, 'path/to/optimizer')
 from optimizer import cem
 import argparse
 import matplotlib.patches as pt
