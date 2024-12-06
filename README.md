@@ -119,3 +119,23 @@ python3 plot_traj_video.py --num_obs <int> --num_reduced_sets <from Step 2>
 --noise_levels <from Step 2> --num_prime <from Step 2> --noises <from Step 2>
 --acc_const_noise <from Step 2> --steer_const_noise <from Step 2>
 ```
+
+## CARLA
+
+Once inside the carla folder follow the below steps:
+
+***Deterministic baseline*** : Run the following command:
+```
+python3 main_carla.py --noise_levels <float> --num_reduced_set <not_relevant, put 1> --num_exps <int>
+--num_obs 3 --num_prime <int> --noises gaussian --acc_const_noise <float>
+--steer_const_noise <float> --costs det --total_obs <8/10> --town <Town05/Town10HD>
+```
+
+***CVaR baseline***/***Our MMD-based approach*** :
+
+```
+python3 main_carla.py --noise_levels <float> --num_reduced_set <not_relevant, put 1> --num_exps <int>
+--num_obs 3 --num_prime <int> --noises gaussian --acc_const_noise <float>
+--steer_const_noise <float> --costs cvar/mmd_opt --total_obs <8/10> --town <Town05/Town10HD>
+```
+
