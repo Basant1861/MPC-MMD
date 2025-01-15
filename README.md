@@ -133,7 +133,7 @@ sys.path.insert(1, 'path/to/PythonAPI/carla')
 ***Deterministic baseline*** : Run the following command:
 ```
 python3 main_carla.py --noise_levels <float> --num_reduced_set <not_relevant, put 1> --num_exps <int>
---num_obs 3 --num_prime <int> --noises gaussian --acc_const_noise <float>
+--num_obs 3 --num_prime <not_relevant, put 1> --noises <beta/gaussian> --acc_const_noise <float>
 --steer_const_noise <float> --costs det --total_obs <8/10> --town <Town05/Town10HD>
 ```
 
@@ -141,7 +141,7 @@ python3 main_carla.py --noise_levels <float> --num_reduced_set <not_relevant, pu
 
 ```
 python3 main_carla.py --noise_levels <float> --num_reduced_set <int> --num_exps <int>
---num_obs 3 --num_prime <int> --noises gaussian --acc_const_noise <float>
+--num_obs 3 --num_prime <int> --noises <beta/gaussian> --acc_const_noise <float>
 --steer_const_noise <float> --costs cvar/mmd_opt --total_obs <8/10> --town <Town05/Town10HD>
 ```
 
