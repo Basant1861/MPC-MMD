@@ -168,7 +168,7 @@ class CEM():
         self.alpha_quant = 0.98
         self.alpha_quant_lane = 0.98
 
-        self.weight_mmd_lane_des,self.weight_mmd_lane,self.weight_mmd_obs = 0. ,0.25, 0.1
+        self.weight_mmd_lane_des,self.weight_mmd_lane,self.weight_mmd_obs = 0. ,0.01, 0.1
 
         self.weight_cvar_lane_des,self.weight_cvar_lane,self.weight_cvar_obs = 0.0 ,25,100
         self.weight_saa_lane_des,self.weight_saa_lane,self.weight_saa_obs = 1000.,1000.,1000.
